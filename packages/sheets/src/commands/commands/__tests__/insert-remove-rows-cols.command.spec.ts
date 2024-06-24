@@ -26,7 +26,7 @@ import {
     UniverInstanceType,
 } from '@univerjs/core';
 import type { Injector } from '@wendellhu/redi';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { MergeCellController } from '../../../controllers/merge-cell.controller';
 import { RefRangeService } from '../../../services/ref-range/ref-range.service';
@@ -45,12 +45,17 @@ import {
     InsertRowAfterCommand,
     InsertRowBeforeCommand,
     InsertRowCommand,
+    print_coverage,
 } from '../insert-row-col.command';
 import type { IRemoveRowColCommandParams } from '../remove-row-col.command';
 import { RemoveColCommand, RemoveRowCommand } from '../remove-row-col.command';
 import { createCommandTestBed } from './create-command-test-bed';
 
 describe('Test insert and remove rows cols commands', () => {
+    afterAll(() => {
+        print_coverage();
+    })
+
     let univer: Univer;
     let get: Injector['get'];
     let commandService: ICommandService;
