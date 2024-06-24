@@ -37,6 +37,25 @@ export interface IRangeChange {
     oldCell: IRange;
     newCell: IRange;
 }
+export class BranchCoverage {
+    static getFormulaItemBySIdBranchCov = new BranchCoverage("getFormulaItemBySId", 8);
+
+    branches: boolean[];
+    functionName: string;
+
+    constructor(functionName: string, branchCnt: number) {
+        this.branches = new Array<boolean>(8).fill(false);
+        this.functionName = functionName;
+    }
+
+    public printCoverage(): void {
+        const totalCovered = this.branches.filter(entry => entry).length;
+        console.log("Function      : " + this.functionName);
+        console.log(`branches covered : ${totalCovered}`);
+        console.log(`Branches total   : ${this.branches.length}`);
+        console.log(`Percentage    : ${totalCovered * 100 / this.branches.length}%`);
+    }
+}
 
 export class FormulaDataModel extends Disposable {
     private _formulaData: IFormulaData = {};
@@ -447,12 +466,18 @@ export class FormulaDataModel extends Disposable {
     getFormulaItemBySId(sId: string, sheetId: string, unitId: string): Nullable<IFormulaDataItem> {
         const formulaData = this._formulaData;
         if (formulaData[unitId] == null) {
+            BranchCoverage.getFormulaItemBySIdBranchCov.branches[0] = true;
             return null;
+        } else {
+            BranchCoverage.getFormulaItemBySIdBranchCov.branches[1] = true;
         }
         const workbookFormulaData = formulaData[unitId];
 
         if (workbookFormulaData?.[sheetId] == null) {
+            BranchCoverage.getFormulaItemBySIdBranchCov.branches[2] = true;
             return null;
+        } else {
+            BranchCoverage.getFormulaItemBySIdBranchCov.branches[3] = true;
         }
 
         const cellMatrix = new ObjectMatrix(workbookFormulaData[sheetId] || {});
@@ -461,13 +486,19 @@ export class FormulaDataModel extends Disposable {
 
         cellMatrix.forValue((row, column, item) => {
             if (item == null) {
+                BranchCoverage.getFormulaItemBySIdBranchCov.branches[4] = true;
                 return true;
+            } else {
+                BranchCoverage.getFormulaItemBySIdBranchCov.branches[5] = true;
             }
             const { f, si, x = 0, y = 0 } = item;
 
             if (si === sId && f.length > 0 && x === 0 && y === 0) {
+                BranchCoverage.getFormulaItemBySIdBranchCov.branches[6] = true;
                 formulaDataItem = item;
                 return false;
+            } else {
+                BranchCoverage.getFormulaItemBySIdBranchCov.branches[7] = true;
             }
         });
 

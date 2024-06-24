@@ -17,9 +17,9 @@
 import type { ICellData, IWorkbookData, Nullable, Univer } from '@univerjs/core';
 import { IUniverInstanceService, LocaleType, ObjectMatrix } from '@univerjs/core';
 import type { Injector } from '@wendellhu/redi';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { FormulaDataModel, initSheetFormulaData } from '../formula-data.model';
+import { FormulaDataModel, initSheetFormulaData, BranchCoverage } from '../formula-data.model';
 import { createCommandTestBed } from './create-command-test-bed';
 
 const TEST_WORKBOOK_DATA_DEMO: IWorkbookData = {
@@ -61,6 +61,11 @@ const TEST_WORKBOOK_DATA_DEMO: IWorkbookData = {
 };
 
 describe('Test formula data model', () => {
+
+    afterAll(() => {
+        BranchCoverage.getFormulaItemBySIdBranchCov.printCoverage();
+    });
+
     describe('formulaDataModel function', () => {
         let univer: Univer;
         let get: Injector['get'];
