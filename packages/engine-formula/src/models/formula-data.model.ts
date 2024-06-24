@@ -39,12 +39,13 @@ export interface IRangeChange {
 }
 export class BranchCoverage {
     static getFormulaItemBySIdBranchCov = new BranchCoverage("getFormulaItemBySId", 8);
+    static clearPreviousArrayFormulaCellDataBranchCov = new BranchCoverage("clearPreviousArrayFormulaCellData", 11);
 
     branches: boolean[];
     functionName: string;
 
     constructor(functionName: string, branchCnt: number) {
-        this.branches = new Array<boolean>(8).fill(false);
+        this.branches = new Array<boolean>(branchCnt).fill(false);
         this.functionName = functionName;
     }
 
@@ -78,39 +79,54 @@ export class FormulaDataModel extends Disposable {
             const clearSheetData = clearArrayFormulaCellData[unitId];
 
             if (clearSheetData == null) {
+                BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[0] = true;
                 return true;
+            } else {
+                BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[1] = true;
             }
 
             Object.keys(clearSheetData).forEach((sheetId) => {
                 const clearCellMatrixData = clearSheetData[sheetId];
                 const rangeMatrix = this._arrayFormulaRange?.[unitId]?.[sheetId];
                 if (rangeMatrix == null) {
+                    BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[2] = true;
                     return true;
+                } else {
+                    BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[3] = true;
                 }
 
                 let arrayFormulaCellMatrixData = new ObjectMatrix<Nullable<ICellData>>(); // Original array formula cell data.
 
                 if (this._arrayFormulaCellData[unitId]?.[sheetId] != null) {
+                    BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[4] = true;
                     arrayFormulaCellMatrixData = new ObjectMatrix<Nullable<ICellData>>(
                         this._arrayFormulaCellData[unitId]?.[sheetId]
                     );
+                } else {
+                    BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[5] = true;
                 }
 
                 clearCellMatrixData.forValue((row, column) => {
                     const range = rangeMatrix?.[row]?.[column];
                     if (range == null) {
+                        BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[6] = true;
                         return true;
                     }
                     const { startRow, startColumn, endRow, endColumn } = range;
                     for (let r = startRow; r <= endRow; r++) {
+                        BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[7] = true;
                         for (let c = startColumn; c <= endColumn; c++) {
+                            BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[8] = true;
                             arrayFormulaCellMatrixData.setValue(r, c, null);
                         }
                     }
                 });
 
                 if (this._arrayFormulaCellData[unitId]) {
+                    BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[9] = true;
                     this._arrayFormulaCellData[unitId]![sheetId] = arrayFormulaCellMatrixData.getData();
+                } else {
+                    BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.branches[10] = true;
                 }
             });
         });

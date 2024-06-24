@@ -64,6 +64,8 @@ describe('Test formula data model', () => {
 
     afterAll(() => {
         BranchCoverage.getFormulaItemBySIdBranchCov.printCoverage();
+        console.log();
+        BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.printCoverage();
     });
 
     describe('formulaDataModel function', () => {
