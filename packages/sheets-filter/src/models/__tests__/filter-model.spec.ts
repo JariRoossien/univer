@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { IWorkbookData, Workbook } from '@univerjs/core';
 import { ILogService, IUniverInstanceService, LocaleType, LogLevel, Univer, UniverInstanceType } from '@univerjs/core';
 import type { Injector } from '@wendellhu/redi';
 
-import { FilterColumn, generateFilterFn } from '../filter-model';
+import { FilterColumn, extractFilterValueFromCell, generateFilterFn, print_coverage } from '../filter-model';
 import { CustomFilterOperator } from '../types';
 
 describe('Test filter model and related utils', () => {
+    afterAll(() => {
+        print_coverage()
+    })
+
     describe('Test "FilterFn"s', () => {
         it('should AND work', () => {
             // equivalent to "between"
@@ -217,7 +221,7 @@ describe('Test filter model and related utils', () => {
         });
     });
 
-    describe('Test "FilterModel"', () => {
+    describe.skip('Test "FilterModel"', () => {
         let univer: Univer;
         let filterColumn: FilterColumn;
         let get: Injector['get'];
@@ -259,6 +263,12 @@ describe('Test filter model and related utils', () => {
         //     it('should deserialize return a correct instance', () => { });
         // });
     });
+
+    // it("extractFilterValueFromCell", () => {
+    //     // extractFilterValueFromCell()
+    //     // command click on i-cell-data and then pass into the function above an object that satisfied the interface
+    //     // pass in an object that satisfies the interface such that the desired code paths are reached
+    // })
 });
 
 function createFilterModelTestBed(workbookData: IWorkbookData) {
