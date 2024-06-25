@@ -48,19 +48,30 @@ With the current tests, none of the 6 branches were hit, resulting in 0% coverag
 
 <Group member name>
 
-<Test 1>
+### Team member: Chantal Ariu
 
-<Show a patch (diff) or a link to a commit made in your forked repository that shows the new/enhanced test>
+#### Function 1: extractFilterValueFromCell
+Link to commit: https://github.com/dream-num/univer/commit/95055e3b2f22a5597a4ab7f22d16ea747d545a40 
 
-<Provide a screenshot of the old coverage results (the same as you already showed above)>
+Coverage before improvement:
+![alt text](image.png)
 
-<Provide a screenshot of the new coverage results>
+Coverage after improvement:
+![alt text](image-2.png)
 
 <State the coverage improvement with a number and elaborate on why the coverage is improved>
+The coverage improvement is 80%, since the coverage started out at 20% and is now 100%. The way this was done was by creating tests that hit every branch.
 
-<Test 2>
+#### Function 2: InsertRowAfterCommand
+Link to commit: https://github.com/dream-num/univer/commit/b6afab73e679a01dc610f3fe051e68e742c9aaa1
 
-<Provide the same kind of information provided for Test 1>
+Coverage before improvement:
+![alt text](image-1.png)
+
+Coverage after improvement:
+![alt text](image-3.png)
+
+The coverage improved by 83.3%, since in the beginning 0 branches were covered by the tests and after the improvements were made, 5 out of the 6 branches were hit. This was also done by writing tests that hit the branches.
 
 ### Overall
 
