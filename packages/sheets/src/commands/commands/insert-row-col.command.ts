@@ -202,14 +202,14 @@ export const InsertRowBeforeCommand: ICommand = {
     },
 };
 
-const branch_coverage = {
+const branchCoverage = {
     "InsertRowAfterCommand_1": false,
     "InsertRowAfterCommand_2": false,
     "InsertRowAfterCommand_3": false,
     "InsertRowAfterCommand_4": false,
     "InsertRowAfterCommand_5": false,
     "InsertRowAfterCommand_6": false
-}
+};
 
 export const InsertRowAfterCommand: ICommand = {
     type: CommandType.COMMAND,
@@ -220,30 +220,30 @@ export const InsertRowAfterCommand: ICommand = {
         let range: IRange;
 
         if (selections?.length === 1) {
-            branch_coverage["InsertRowAfterCommand_1"] = true;
+            branchCoverage["InsertRowAfterCommand_1"] = true;
             range = selections[0];
         } else {
             // if there are multi selections, we can't decide which row to insert
             // in fact, UI would hides / disables the insert row button
-            branch_coverage["InsertRowAfterCommand_2"] = true;
+            branchCoverage["InsertRowAfterCommand_2"] = true;
             return false;
         }
         
         const univerInstanceService = accessor.get(IUniverInstanceService);
         const workbook = univerInstanceService.getCurrentUnitForType<Workbook>(UniverInstanceType.UNIVER_SHEET);
         if (!workbook) {
-            branch_coverage["InsertRowAfterCommand_3"] = true;
+            branchCoverage["InsertRowAfterCommand_3"] = true;
             return false;
         }
 
-        branch_coverage["InsertRowAfterCommand_4"] = true;
+        branchCoverage["InsertRowAfterCommand_4"] = true;
         const worksheet = workbook.getActiveSheet();
         if (!worksheet) {
-            branch_coverage["InsertRowAfterCommand_5"] = true;
+            branchCoverage["InsertRowAfterCommand_5"] = true;
             return false;
         }
 
-        branch_coverage["InsertRowAfterCommand_6"] = true;
+        branchCoverage["InsertRowAfterCommand_6"] = true;
         const unitId = workbook.getUnitId();
         const subUnitId = worksheet.getSheetId();
         const count = range.endRow - range.startRow + 1;
@@ -265,11 +265,11 @@ export const InsertRowAfterCommand: ICommand = {
     },
 };
 
-export const print_coverage = () => {
-    for (const [branch, covered] of Object.entries(branch_coverage)) {
-        console.log(`${branch} was ${covered ? 'hit' : 'not hit'}`)
+export const printCoverage = () => {
+    for (const [branch, covered] of Object.entries(branchCoverage)) {
+        console.log(`${branch} was ${covered ? 'hit' : 'not hit'}`);
     }
-}
+};
 
 export interface IInsertColCommandParams {
     unitId: string;

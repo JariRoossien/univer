@@ -45,7 +45,7 @@ import {
     InsertRowAfterCommand,
     InsertRowBeforeCommand,
     InsertRowCommand,
-    print_coverage,
+    printCoverage,
 } from '../insert-row-col.command';
 import type { IRemoveRowColCommandParams } from '../remove-row-col.command';
 import { RemoveColCommand, RemoveRowCommand } from '../remove-row-col.command';
@@ -53,7 +53,7 @@ import { createCommandTestBed } from './create-command-test-bed';
 
 describe('Test insert and remove rows cols commands', () => {
     afterAll(() => {
-        print_coverage();
+        printCoverage();
     })
 
     let univer: Univer;
@@ -213,7 +213,7 @@ describe('Test insert and remove rows cols commands', () => {
 
             await commandService.executeCommand(RedoCommand.id);
             expect(getRowCount()).toBe(21);
-        });
+        }); 
 
         it("Should 'insert after' work", async () => {
             selectRow(1, 1);
@@ -243,7 +243,7 @@ describe('Test insert and remove rows cols commands', () => {
 
             const result = await commandService.executeCommand(InsertColBeforeCommand.id);
             expect(result).toBeTruthy();
-            expect(getColCount()).toBe(21);
+            expect(getColCount()).toBe(21); 
             // Insert column style
             expect(getCellStyle(1, 1)).toBe('s2');
             expect(getCellStyle(1, 2)).toBe('s2');
@@ -319,6 +319,7 @@ describe('Test insert and remove rows cols commands', () => {
             expect(getMergedInfo(12, 2)).toEqual({ startRow: 10, endRow: 13, startColumn: 2, endColumn: 2 });
         });
     });
+
     describe('Remove col where contain mergeCell', () => {
         it('reduce merge cell length', async () => {
             await commandService.executeCommand(RemoveColCommand.id, {
@@ -330,6 +331,37 @@ describe('Test insert and remove rows cols commands', () => {
                 },
             } as IRemoveRowColCommandParams);
             expect(getMergedInfo(10, 12)).toEqual({ startRow: 10, endRow: 10, startColumn: 10, endColumn: 13 });
+        });
+    });
+
+    describe("Coverage tests for 'InsertRowAfterCommand'", () => {
+        it("Should return true with single selection", async () => {
+            selectRow(1, 1);
+
+            const result = await commandService.executeCommand(InsertRowAfterCommand.id);
+
+            expect(result).toEqual(true);
+        });
+
+        it("Should return false with multiple selections", async () => {            
+            selectRow(1, 1);
+            selectRow(2, 2);
+
+            const result = await commandService.executeCommand(InsertRowAfterCommand.id);
+
+            expect(result).toEqual(false);
+        });
+
+        it("Should return false in the edge case where workbook doesn't exist", async () => {
+            selectRow(1, 1);
+
+            const currentService = get(IUniverInstanceService);
+            // @ts-ignore
+            currentService._currentUnits$.getValue = () => ({});
+
+            const result = await commandService.executeCommand(InsertRowAfterCommand.id);
+
+            expect(result).toEqual(false);
         });
     });
 });
