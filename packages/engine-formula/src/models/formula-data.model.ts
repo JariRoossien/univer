@@ -55,6 +55,9 @@ export class BranchCoverage {
         console.log(`branches covered : ${totalCovered}`);
         console.log(`Branches total   : ${this.branches.length}`);
         console.log(`Percentage    : ${totalCovered * 100 / this.branches.length}%`);
+        for (let i = 0; i < this.branches.length; i++) {
+            console.log(`Branch ${i}: ${this.branches[i] ? "Hit": "Miss"}`);
+        }
     }
 }
 
