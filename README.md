@@ -18,21 +18,27 @@ Programming language: Typescript
 
 <Show the coverage results provided by the existing tool with a screenshot>
 
-### Your own coverage tool
+## Your own coverage tool
 
 <The following is supposed to be repeated for each group member>
 
-<Group member name>
+### Team member: Chantal Ariu
 
-<Function 1 name>
+#### Function 1: extractFilterValueFromCell
 
-<Show a patch (diff) or a link to a commit made in your forked repository that shows the instrumented code to gather coverage measurements>
+Link to commit: https://github.com/dream-num/univer/commit/e402af0b9c40e783b7c13e0542fe1cd0f4bfd2f4
 
-<Provide a screenshot of the coverage results output by the instrumentation>
+Coverage tool results:
+![alt text](image.png)
+Out of the 15 branches, only 3 were hit with unchanged tests, meaning the coverage for this function is at 20%.
 
-<Function 2 name>
+#### Function 2: InsertRowAfterCommand
 
-<Provide the same kind of information provided for Function 1>
+Link to commit: https://github.com/dream-num/univer/commit/e3401afbd670d59a3f5052254282f1fcfe9a0ce1
+
+Coverage tool results:
+![alt text](image-1.png)
+With the current tests, none of the 6 branches were hit, resulting in 0% coverage.
 
 ## Coverage improvement
 
