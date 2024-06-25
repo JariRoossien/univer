@@ -533,7 +533,7 @@ function getFilterValueForConditionalFiltering(worksheet: Worksheet, row: number
     return extractFilterValueFromCell(rawCell);
 }
 
-const branch_coverage = {
+const branchCoverage = {
     "extractFilterValueFromCell_1": false,
     "extractFilterValueFromCell_2": false,
     "extractFilterValueFromCell_3": false,
@@ -549,60 +549,60 @@ const branch_coverage = {
     "extractFilterValueFromCell_13": false,
     "extractFilterValueFromCell_14": false,
     "extractFilterValueFromCell_15": false,
-}
+};
 
 export function extractFilterValueFromCell(cell: ICellData): string | number {
     const richTextValue = cell.p?.body?.dataStream;
     if (richTextValue) {
-        branch_coverage["extractFilterValueFromCell_1"] = true;
+        branchCoverage["extractFilterValueFromCell_1"] = true;
         return richTextValue.trimEnd();
     }
     const rawValue = cell.v; 
 
     if (typeof rawValue === 'string') {
-        branch_coverage["extractFilterValueFromCell_2"] = true;
+        branchCoverage["extractFilterValueFromCell_2"] = true;
         if (cell.t === CellValueType.BOOLEAN) {
-            branch_coverage["extractFilterValueFromCell_3"] = true;
+            branchCoverage["extractFilterValueFromCell_3"] = true;
             return rawValue.toUpperCase();
         }
-        branch_coverage["extractFilterValueFromCell_4"] = true;
+        branchCoverage["extractFilterValueFromCell_4"] = true;
         return rawValue;
     };
 
-    branch_coverage["extractFilterValueFromCell_5"] = true;
+    branchCoverage["extractFilterValueFromCell_5"] = true;
     if (typeof rawValue === 'number') {
-        branch_coverage["extractFilterValueFromCell_6"] = true;
+        branchCoverage["extractFilterValueFromCell_6"] = true;
         if (cell.t === CellValueType.BOOLEAN) {
-            branch_coverage["extractFilterValueFromCell_7"] = true;
+            branchCoverage["extractFilterValueFromCell_7"] = true;
             if (rawValue) {
-                branch_coverage["extractFilterValueFromCell_8"] = true;
+                branchCoverage["extractFilterValueFromCell_8"] = true;
                 return 'TRUE';
             }
-            branch_coverage["extractFilterValueFromCell_9"] = true;
+            branchCoverage["extractFilterValueFromCell_9"] = true;
             return 'FALSE';
             // return rawValue ? 'TRUE' : 'FALSE';
         }
-        branch_coverage["extractFilterValueFromCell_10"] = true;
+        branchCoverage["extractFilterValueFromCell_10"] = true;
         return rawValue;
     };
 
-    branch_coverage["extractFilterValueFromCell_11"]
+    branchCoverage["extractFilterValueFromCell_11"] = true
     if (typeof rawValue === 'boolean') {
         // return rawValue ? 'TRUE' : 'FALSE';
-        branch_coverage["extractFilterValueFromCell_12"]
+        branchCoverage["extractFilterValueFromCell_12"] = true
         if (rawValue) {
-            branch_coverage["extractFilterValueFromCell_13"]
+            branchCoverage["extractFilterValueFromCell_13"] = true
             return 'TRUE';
         }
-        branch_coverage["extractFilterValueFromCell_14"]
+        branchCoverage["extractFilterValueFromCell_14"] = true
         return 'FALSE';
     }
-    branch_coverage["extractFilterValueFromCell_15"]
+    branchCoverage["extractFilterValueFromCell_15"] = true
     return '';
 }
 
-export const print_coverage = () => {
-    for (const [branch, covered] of Object.entries(branch_coverage)) {
+export const printCoverage = () => {
+    for (const [branch, covered] of Object.entries(branchCoverage)) {
         console.log(`${branch} was ${covered ? 'hit' : 'not hit'}`)
     }
 }

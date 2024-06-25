@@ -16,15 +16,15 @@
 
 import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { IWorkbookData, Workbook } from '@univerjs/core';
-import { ILogService, IUniverInstanceService, LocaleType, LogLevel, Univer, UniverInstanceType } from '@univerjs/core';
+import { CellValueType, ILogService, IUniverInstanceService, LocaleType, LogLevel, Univer, UniverInstanceType } from '@univerjs/core';
 import type { Injector } from '@wendellhu/redi';
 
-import { FilterColumn, extractFilterValueFromCell, generateFilterFn, print_coverage } from '../filter-model';
+import { FilterColumn, extractFilterValueFromCell, generateFilterFn, printCoverage } from '../filter-model';
 import { CustomFilterOperator } from '../types';
 
 describe('Test filter model and related utils', () => {
     afterAll(() => {
-        print_coverage()
+        printCoverage()
     })
 
     describe('Test "FilterFn"s', () => {
@@ -264,11 +264,65 @@ describe('Test filter model and related utils', () => {
         // });
     });
 
-    // it("extractFilterValueFromCell", () => {
-    //     // extractFilterValueFromCell()
-    //     // command click on i-cell-data and then pass into the function above an object that satisfied the interface
-    //     // pass in an object that satisfies the interface such that the desired code paths are reached
-    // })
+    describe("Test 'extractFilterValueFromCell'", () => {
+        it("Should return trimmed rich value when dataStream exists", () => {
+            const testDataStreamUntrimmed = "     some-stream-data    ";
+
+            const result = extractFilterValueFromCell({
+                p: {
+                    id: "some-id",
+                    documentStyle: {},
+                    body: {
+                        dataStream: testDataStreamUntrimmed
+                    }
+                }
+            });
+
+            expect(result).toEqual("     some-stream-data");
+        });
+
+        it("Should return v when v is string and t is not boolean", () => {
+            const result = extractFilterValueFromCell({v: "anything"});
+
+            expect(result).toEqual("anything");
+        });
+
+        it("Should return v in upper case when v is string and t is boolean", () => {
+            const result = extractFilterValueFromCell({v: "anything", t: CellValueType.BOOLEAN});
+
+            expect(result).toEqual("ANYTHING");
+        });
+
+        it("Should return string 'TRUE' when v is a number and t is boolean", () => {
+            const result = extractFilterValueFromCell({v: 10, t: CellValueType.BOOLEAN});
+
+            expect(result).toEqual("TRUE");
+        });
+
+        it("Should return string 'FALSE' when v is 0 and t is boolean", () => {
+            const result = extractFilterValueFromCell({v: 0, t: CellValueType.BOOLEAN});
+
+            expect(result).toEqual("FALSE");
+        });
+
+        it("Should return string 'TRUE' when v is true", () => {
+            const result = extractFilterValueFromCell({v: true});
+
+            expect(result).toEqual("TRUE");
+        });
+
+        it("Should return string 'FALSE' when v is false", () => {
+            const result = extractFilterValueFromCell({v: false});
+
+            expect(result).toEqual("FALSE");
+        });
+
+        it("Should return empty string when v is not passed and when dataStream doesn't exist", () => {
+            const result = extractFilterValueFromCell({});
+
+            expect(result).toEqual('');
+        });
+    });
 });
 
 function createFilterModelTestBed(workbookData: IWorkbookData) {
