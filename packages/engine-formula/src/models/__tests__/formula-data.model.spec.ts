@@ -21,6 +21,7 @@ import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { FormulaDataModel, initSheetFormulaData, BranchCoverage } from '../formula-data.model';
 import { createCommandTestBed } from './create-command-test-bed';
+import { IRuntimeUnitDataType } from '../../basics/common';
 
 const TEST_WORKBOOK_DATA_DEMO: IWorkbookData = {
     id: 'test',
@@ -30,6 +31,9 @@ const TEST_WORKBOOK_DATA_DEMO: IWorkbookData = {
             id: 'sheet1',
             cellData: {
                 0: {
+                    1: {
+                        si: ''
+                    },
                     3: {
                         f: '=SUM(A1)',
                         si: '3e4r5t',
@@ -60,6 +64,23 @@ const TEST_WORKBOOK_DATA_DEMO: IWorkbookData = {
     styles: {},
 };
 
+const TEST_EMPTY_WORKBOOK_DATA: IWorkbookData = {
+    id: 'test',
+    appVersion: '3.0.0-alpha',
+    sheets: {
+        sheet1: {
+            id: 'sheet1',
+            cellData: {
+
+            },
+        },
+    },
+    locale: LocaleType.ZH_CN,
+    name: '',
+    sheetOrder: [],
+    styles: {},
+};
+
 describe('Test formula data model', () => {
 
     afterAll(() => {
@@ -72,6 +93,8 @@ describe('Test formula data model', () => {
         let univer: Univer;
         let get: Injector['get'];
         let formulaDataModel: FormulaDataModel;
+
+
         let getValues: (
             startRow: number,
             startColumn: number,
@@ -378,6 +401,37 @@ describe('Test formula data model', () => {
                 }
             });
         });
+
+        describe('getFormulaItemBySId', () => {
+            it('Should return null on non-existing unitId', () => {
+                formulaDataModel.initFormulaData();
+                const unitId = 'NonExisting';
+                const sheetId = 'sheet1';
+
+                expect(formulaDataModel.getFormulaItemBySId('NULL', sheetId, unitId)).toBeNull();
+            });
+            it('Should return null on non-existing sheetId', () => {
+                formulaDataModel.initFormulaData();
+                const unitId = 'test';
+                const sheetId = 'NonExistingSheet';
+
+                expect(formulaDataModel.getFormulaItemBySId('NULL', sheetId, unitId)).toBeNull();
+            });
+            it('Should find item by Value', () => {
+                const unitId = 'test';
+                const sheetId = 'sheet1';
+
+                expect(formulaDataModel.getFormulaItemBySId('3e4r5t', sheetId, unitId)).toBeTruthy();
+            });
+            it('Should not find item by Value', () => {
+                const unitId = 'test';
+                const sheetId = 'sheet1';
+
+                expect(formulaDataModel.getFormulaItemBySId('NonExisting', sheetId, unitId)).toBeNull();
+            });
+
+        })
+
     });
 
     describe('function initSheetFormulaData', () => {
@@ -442,4 +496,5 @@ describe('Test formula data model', () => {
             expect(formulaData).toStrictEqual(result);
         });
     });
+
 });
