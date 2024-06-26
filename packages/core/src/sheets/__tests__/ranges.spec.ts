@@ -23,13 +23,13 @@ describe('test isAllFormatInTextRuns', () => {
 
     afterAll(() => {
         console.log('isAllFormatInTextRuns branch Coverage')
-        console.log(`Branch 1: ${branch_coverage.insertAfter1} ? 'hit' : 'miss'}`);
-        console.log(`Branch 2: ${branch_coverage.insertAfter2} ? 'hit' : 'miss'}`);
-        console.log(`Branch 3: ${branch_coverage.insertAfter3} ? 'hit' : 'miss'}`);
-        console.log(`Branch 4: ${branch_coverage.insertAfter4} ? 'hit' : 'miss'}`);
-        console.log(`Branch 5: ${branch_coverage.insertAfter5} ? 'hit' : 'miss'}`);
-        console.log(`Branch 6: ${branch_coverage.insertAfter6} ? 'hit' : 'miss'}`);
-        console.log(`Branch 7: ${branch_coverage.insertAfter7} ? 'hit' : 'miss'}`);
+        console.log(`Branch 1: ${branch_coverage.insertAfter1 ? 'hit' : 'miss'}`);
+        console.log(`Branch 2: ${branch_coverage.insertAfter2 ? 'hit' : 'miss'}`);
+        console.log(`Branch 3: ${branch_coverage.insertAfter3 ? 'hit' : 'miss'}`);
+        console.log(`Branch 4: ${branch_coverage.insertAfter4 ? 'hit' : 'miss'}`);
+        console.log(`Branch 5: ${branch_coverage.insertAfter5 ? 'hit' : 'miss'}`);
+        console.log(`Branch 6: ${branch_coverage.insertAfter6 ? 'hit' : 'miss'}`);
+        console.log(`Branch 7: ${branch_coverage.insertAfter7 ? 'hit' : 'miss'}`);
 });
 
     it('should return true when all content is bold', () => {
