@@ -84,9 +84,6 @@ describe('test isAllFormatInTextRuns', () => {
         expect(isAllFormatInTextRuns('bl', body)).toBe(BooleanNumber.FALSE);
     });
 
-
-});
-
 it('should return false when any content is not underlined', () => {
     const body: IDocumentBody = {
         dataStream: 'hello\r\n',
@@ -120,4 +117,7 @@ it('should return false when any content is not underlined', () => {
     };
 
     expect(isAllFormatInTextRuns('ul', body)).toBe(BooleanNumber.FALSE);
+});
+
+
 });
