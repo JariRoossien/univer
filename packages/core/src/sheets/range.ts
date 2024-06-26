@@ -70,8 +70,9 @@ export function isAllFormatInTextRuns(key: keyof IStyleBase, body: IDocumentBody
         branch_coverage["insertAfter1"] = true;
 
         if (ts[key] == null) {
+            branch_coverage["insertAfter2"] = true;
             return BooleanNumber.FALSE;
-            branch_coverage["insertAfter2"] = true; }
+             }
 
         else {
             branch_coverage["insertAfter3"] = true;
