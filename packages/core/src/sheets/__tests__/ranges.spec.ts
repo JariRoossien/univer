@@ -86,3 +86,38 @@ describe('test isAllFormatInTextRuns', () => {
 
 
 });
+
+it('should return false when any content is not underlined', () => {
+    const body: IDocumentBody = {
+        dataStream: 'hello\r\n',
+        textRuns: [{
+            st: 0,
+            ed: 4,
+            ts: {
+                ul: {
+                    s: BooleanNumber.TRUE
+                }
+            },
+        }],
+    };
+
+    expect(isAllFormatInTextRuns('ul', body)).toBe(BooleanNumber.FALSE);
+});
+
+
+it('should return false when any content is not underlined', () => {
+    const body: IDocumentBody = {
+        dataStream: 'hello\r\n',
+        textRuns: [{
+            st: 0,
+            ed: 4,
+            ts: {
+                ul: {
+                    s: BooleanNumber.FALSE
+                }
+            },
+        }],
+    };
+
+    expect(isAllFormatInTextRuns('ul', body)).toBe(BooleanNumber.FALSE);
+});
