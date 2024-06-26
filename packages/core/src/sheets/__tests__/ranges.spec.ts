@@ -58,7 +58,31 @@ describe('test isAllFormatInTextRuns', () => {
         expect(isAllFormatInTextRuns('bl', body)).toBe(BooleanNumber.FALSE);
     });
 
+    it('should return false when ts keys is undefined', () => {
+        const body: IDocumentBody = {
+            dataStream: 'hello\r\n',
+            textRuns: [{
+                st: 0,
+                ed: 4,
+                ts: { bl: null },
+            }],
+        };
 
+        expect(isAllFormatInTextRuns('bl', body)).toBe(BooleanNumber.FALSE);
+    });
+
+    it('should return false when ts keys is false', () => {
+        const body: IDocumentBody = {
+            dataStream: 'hello\r\n',
+            textRuns: [{
+                st: 0,
+                ed: 4,
+                ts: { bl: BooleanNumber.FALSE },
+            }],
+        };
+
+        expect(isAllFormatInTextRuns('bl', body)).toBe(BooleanNumber.FALSE);
+    });
 
 
 });
