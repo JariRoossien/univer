@@ -83,8 +83,8 @@ export function isAllFormatInTextRuns(key: keyof IStyleBase, body: IDocumentBody
             case 'bl': // fallthrough
             case 'it': {
                 if (ts[key] === BooleanNumber.FALSE) {
-                    return BooleanNumber.FALSE;
-                    branch_coverage["insertAfter4"] = true; }
+                    branch_coverage["insertAfter4"] = true;
+                    return BooleanNumber.FALSE; }
 
                     else {
                         branch_coverage["insertAfter5"] = true;
@@ -96,12 +96,13 @@ export function isAllFormatInTextRuns(key: keyof IStyleBase, body: IDocumentBody
             case 'ul': // fallthrough
             case 'st': {
                 if (ts[key]!.s === BooleanNumber.FALSE) {
+                    branch_coverage["insertAfter6"] = true;
                     return BooleanNumber.FALSE;
                 }
 
                 else
                 {
-                    branch_coverage["insertAfter6"] = true;
+                    branch_coverage["insertAfter7"] = true;
                 }
                 break;
             }
