@@ -49,7 +49,7 @@ export interface IRangeDependencies {
     getStyles(): Readonly<Styles>;
 }
 
-const branch_coverage = {
+export const branch_coverage = {
     insertAfter1: false,
     insertAfter2: false,
     insertAfter3: false,
