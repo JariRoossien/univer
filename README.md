@@ -35,6 +35,23 @@ Programming language: Typescript
 [Github Commit](https://github.com/JariRoossien/univer/tree/dc771281840c7e80bec107ee43dcbe9f70103f76)
 
 ![Coverage Report for setEndForRange showing 0% coverage before adding tests](images/setEndForRange-Before.jpeg)
+#### Team member: Chantal Ariu
+
+##### Function 1: extractFilterValueFromCell
+
+Link to commit: https://github.com/dream-num/univer/commit/e402af0b9c40e783b7c13e0542fe1cd0f4bfd2f4
+
+Coverage tool results:
+![alt text](image.png)
+Out of the 15 branches, only 3 were hit with unchanged tests, meaning the coverage for this function is at 20%.
+
+##### Function 2: InsertRowAfterCommand
+
+Link to commit: https://github.com/dream-num/univer/commit/e3401afbd670d59a3f5052254282f1fcfe9a0ce1
+
+Coverage tool results:
+![alt text](image-1.png)
+With the current tests, none of the 6 branches were hit, resulting in 0% coverage.
 
 ## Coverage improvement
 
@@ -42,34 +59,59 @@ Programming language: Typescript
 
 <The following is supposed to be repeated for each group member>
 
-#### Team Member: Sanjay Chacku Purakal
+### Team Member: Sanjay Chacku Purakal
 
-##### SetWorksheetShowCommand()
+#### SetWorksheetShowCommand()
 
 [Github Commit](https://github.com/JariRoossien/univer/tree/9bfd026c8a5d9e96685a9c6cb22008c086ddfdca)
 
-###### Before
+##### Before
 ![Coverage Report for SetWorksheetShowCommand showing 0% coverage before adding tests](images/setWorksheetShowCommand-Before.jpeg)
 
-###### After
+##### After
 ![Coverage Report for SetWorksheetShowCommand showing 81.82% coverage after adding tests](images/setWorksheetShowCommand-After.jpeg)
 
 The code coverage has been improved from 0% (0/11 branches) to 81.82% (9/11 branches).
 The coverage has been improved by considering many edge cases and ensuring all cases in which a program can fail are tested.
 For this some test cases had to be specifically constructed since the test case should only fail if another part of the program malfunctions or is changed. To emulate this, flawed inputs where constructed artificially and the brach coverage was achieved by the program catching those exceptions and handling them appropriately.
 
-##### setEndForRange()
+#### setEndForRange()
 
 [Github Commit](https://github.com/JariRoossien/univer/tree/13d355d6ee7ef0388dc3159525270a4e6492a288)
 
-###### Before
+##### Before
 ![Coverage Report for setEndForRange showing 0% coverage before adding tests](images/setEndForRange-Before.jpeg)
 
-###### After
+##### After
 ![Coverage Report for setEndForRange showing 100% coverage after adding tests](images/setEndForRange-After.jpeg)
 
 The code coverage has been improved from 0% (0/9 branches) to 100% (9/9 branches).
 The function is intended to replace NaN values in a range with the extremes (0 or max - 1). For this purpose the tests supply a NaN value in ecah of the possible positions. The branch coverage is then achieved by the program handling all NaN values and replacing them with the correct default values.
+
+### Team member: Chantal Ariu
+
+#### Function 1: extractFilterValueFromCell
+Link to commit: https://github.com/dream-num/univer/commit/95055e3b2f22a5597a4ab7f22d16ea747d545a40 
+
+Coverage before improvement:
+![alt text](image.png)
+
+Coverage after improvement:
+![alt text](image-2.png)
+
+<State the coverage improvement with a number and elaborate on why the coverage is improved>
+The coverage improvement is 80%, since the coverage started out at 20% and is now 100%. The way this was done was by creating tests that hit every branch.
+
+#### Function 2: InsertRowAfterCommand
+Link to commit: https://github.com/dream-num/univer/commit/b6afab73e679a01dc610f3fe051e68e742c9aaa1
+
+Coverage before improvement:
+![alt text](image-1.png)
+
+Coverage after improvement:
+![alt text](image-3.png)
+
+The coverage improved by 83.3%, since in the beginning 0 branches were covered by the tests and after the improvements were made, 5 out of the 6 branches were hit. This was also done by writing tests that hit the branches.
 
 ### Overall
 
