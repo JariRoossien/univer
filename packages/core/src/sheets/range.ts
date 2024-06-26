@@ -75,7 +75,7 @@ export function isAllFormatInTextRuns(key: keyof IStyleBase, body: IDocumentBody
 
         else {
             branch_coverage["insertAfter3"] = true;
-            }
+
         }
 
         switch (key) {
@@ -88,7 +88,7 @@ export function isAllFormatInTextRuns(key: keyof IStyleBase, body: IDocumentBody
                     else {
                         branch_coverage["insertAfter5"] = true;
                         }
-                }
+
                 break;
             }
 
