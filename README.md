@@ -146,7 +146,23 @@ The coverage improved by 83.3%, since in the beginning 0 branches were covered b
 
 <Provide a screenshot of the old coverage results by running an existing tool (the same as you already showed above)>
 
+#### Old Coverage
+
+![firefox_Wl2v3WhjCP](https://github.com/JariRoossien/univer/assets/54411538/b0b25d68-d9d2-4b64-b60f-934be7988e39)
+
+
 <Provide a screenshot of the new coverage results by running the existing tool using all test modifications made by the group>
+
+#### New Coverage
+
+![firefox_sjbbH60tgb](https://github.com/JariRoossien/univer/assets/54411538/7bc57c0d-8baa-467b-9028-592f0073b300)
+
+Improvements made:
+- +0.27% statement coverage
+- +0.31% branch coverage
+- +0.15% function coverage
+- +0.27% line coverage
+
 
 ## Statement of individual contributions
 
