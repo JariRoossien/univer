@@ -242,5 +242,13 @@ Improvements made:
 ## Statement of individual contributions
 
 <Write what each group member did>
+
+
 ### Jari Roossien
 Set up github repository, implemented custom script to combine existing tooling for code coverage, implemented tests and coverage tooling for getFormulaItemBySId and clearPreviousArrayFormulaCellData. 
+
+### Sanjay Chacku Purakal
+
+### Chantal Ariu
+
+### Ly Le
