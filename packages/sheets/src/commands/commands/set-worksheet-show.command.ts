@@ -25,7 +25,7 @@ import {
     SetWorksheetActiveOperation,
     // SetWorksheetUnActivateMutationFactory,
 } from '../operations/set-worksheet-active.operation';
-import { getSheetCommandTarget } from './utils/target-util';
+import { getSheetCommandTarget } from './__tests__/broken-test-functions';
 
 export interface ISetWorksheetShowCommandParams {
     unitId: string;
@@ -33,11 +33,37 @@ export interface ISetWorksheetShowCommandParams {
     value?: string;
 }
 
+export class BranchCoverage {
+    static coverage = new BranchCoverage("SetWorksheetShowCommand", 11)
+
+    branches: boolean[];
+    functionName: string;
+
+    constructor(functionName: string, branchCount: number) {
+        this.functionName = functionName;
+        this.branches = new Array<boolean>(branchCount).fill(false);
+    }
+
+    public printCoverage(): void {
+        const totalCovered = this.branches.filter(Boolean).length;
+        console.log("--- COVERAGE REPORT ---")
+        console.log(`Function         : ${this.functionName}`)
+        console.log(`Branches covered : ${totalCovered}`)
+        console.log(`Branches total   : ${this.branches.length}`)
+        console.log(`Percentage       : ${totalCovered * 100 / this.branches.length}%`)
+        this.branches.forEach((value, index) => {
+            console.log(`Branch ${index}: ${value ? "Hit" : "Miss"}`)
+        })
+    }
+}
+
 export const SetWorksheetShowCommand: ICommand = {
     type: CommandType.COMMAND,
     id: 'sheet.command.set-worksheet-show',
 
     handler: async (accessor: IAccessor, params: ISetWorksheetShowCommandParams) => {
+        BranchCoverage.coverage.branches[0] = true;
+
         const { unitId, subUnitId } = params;
 
         const commandService = accessor.get(ICommandService);
@@ -45,15 +71,37 @@ export const SetWorksheetShowCommand: ICommand = {
         const univerInstanceService = accessor.get(IUniverInstanceService);
 
         const target = getSheetCommandTarget(accessor.get(IUniverInstanceService));
-        if (!target) return false;
+        if (!target) {
+            BranchCoverage.coverage.branches[1] = true;
+            return false;
+        } else {
+            BranchCoverage.coverage.branches[2] = true;
+        }
 
         const workbook = univerInstanceService.getCurrentUnitForType<Workbook>(UniverInstanceType.UNIVER_SHEET)!;
-        if (!workbook) return false;
+        if (!workbook) {
+            BranchCoverage.coverage.branches[3] = true;
+            return false;
+        } else {
+            BranchCoverage.coverage.branches[4] = true;
+        }
         const worksheet = workbook.getSheetBySheetId(subUnitId);
-        if (!worksheet) return false;
+        if (!worksheet) {
+            BranchCoverage.coverage.branches[5] = true;
+            return false;
+        } else {
+            BranchCoverage.coverage.branches[6] = true;
+        }
 
         const hidden = worksheet.getConfig().hidden;
-        if (hidden === BooleanNumber.FALSE) return false;
+        if (hidden === BooleanNumber.FALSE) {
+            BranchCoverage.coverage.branches[7] = true;
+            return false;
+        } else {
+            BranchCoverage.coverage.branches[8] = true;
+        }
+
+        return false;
 
         const redoMutationParams: ISetWorksheetHideMutationParams = {
             unitId,
@@ -76,6 +124,7 @@ export const SetWorksheetShowCommand: ICommand = {
         );
 
         if (result && activeResult) {
+            BranchCoverage.coverage.branches[9] = true;
             undoRedoService.pushUndoRedo({
                 unitID: unitId,
                 undoMutations: [
@@ -88,6 +137,8 @@ export const SetWorksheetShowCommand: ICommand = {
                 ],
             });
             return true;
+        } else {
+            BranchCoverage.coverage.branches[10] = true;
         }
 
         return false;

@@ -533,23 +533,76 @@ function getFilterValueForConditionalFiltering(worksheet: Worksheet, row: number
     return extractFilterValueFromCell(rawCell);
 }
 
-function extractFilterValueFromCell(cell: ICellData): string | number {
-    const richTextValue = cell.p?.body?.dataStream;
-    if (richTextValue) return richTextValue.trimEnd();
+const branchCoverage = {
+    "extractFilterValueFromCell_1": false,
+    "extractFilterValueFromCell_2": false,
+    "extractFilterValueFromCell_3": false,
+    "extractFilterValueFromCell_4": false,
+    "extractFilterValueFromCell_5": false,
+    "extractFilterValueFromCell_6": false,
+    "extractFilterValueFromCell_7": false,
+    "extractFilterValueFromCell_8": false,
+    "extractFilterValueFromCell_9": false,
+    "extractFilterValueFromCell_10": false,
+    "extractFilterValueFromCell_11": false,
+    "extractFilterValueFromCell_12": false,
+    "extractFilterValueFromCell_13": false,
+    "extractFilterValueFromCell_14": false,
+    "extractFilterValueFromCell_15": false,
+};
 
-    const rawValue = cell.v;
+export function extractFilterValueFromCell(cell: ICellData): string | number {
+    const richTextValue = cell.p?.body?.dataStream;
+    if (richTextValue) {
+        branchCoverage["extractFilterValueFromCell_1"] = true;
+        return richTextValue.trimEnd();
+    }
+    const rawValue = cell.v; 
 
     if (typeof rawValue === 'string') {
-        if (cell.t === CellValueType.BOOLEAN) return rawValue.toUpperCase();
+        branchCoverage["extractFilterValueFromCell_2"] = true;
+        if (cell.t === CellValueType.BOOLEAN) {
+            branchCoverage["extractFilterValueFromCell_3"] = true;
+            return rawValue.toUpperCase();
+        }
+        branchCoverage["extractFilterValueFromCell_4"] = true;
         return rawValue;
     };
 
+    branchCoverage["extractFilterValueFromCell_5"] = true;
     if (typeof rawValue === 'number') {
-        if (cell.t === CellValueType.BOOLEAN) return rawValue ? 'TRUE' : 'FALSE';
+        branchCoverage["extractFilterValueFromCell_6"] = true;
+        if (cell.t === CellValueType.BOOLEAN) {
+            branchCoverage["extractFilterValueFromCell_7"] = true;
+            if (rawValue) {
+                branchCoverage["extractFilterValueFromCell_8"] = true;
+                return 'TRUE';
+            }
+            branchCoverage["extractFilterValueFromCell_9"] = true;
+            return 'FALSE';
+            // return rawValue ? 'TRUE' : 'FALSE';
+        }
+        branchCoverage["extractFilterValueFromCell_10"] = true;
         return rawValue;
     };
 
-    if (typeof rawValue === 'boolean') return rawValue ? 'TRUE' : 'FALSE';
-
+    branchCoverage["extractFilterValueFromCell_11"] = true
+    if (typeof rawValue === 'boolean') {
+        // return rawValue ? 'TRUE' : 'FALSE';
+        branchCoverage["extractFilterValueFromCell_12"] = true
+        if (rawValue) {
+            branchCoverage["extractFilterValueFromCell_13"] = true
+            return 'TRUE';
+        }
+        branchCoverage["extractFilterValueFromCell_14"] = true
+        return 'FALSE';
+    }
+    branchCoverage["extractFilterValueFromCell_15"] = true
     return '';
+}
+
+export const printCoverage = () => {
+    for (const [branch, covered] of Object.entries(branchCoverage)) {
+        console.log(`${branch} was ${covered ? 'hit' : 'not hit'}`)
+    }
 }
