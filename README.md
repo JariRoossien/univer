@@ -248,6 +248,7 @@ Improvements made:
 Set up github repository, implemented custom script to combine existing tooling for code coverage, implemented tests and coverage tooling for getFormulaItemBySId and clearPreviousArrayFormulaCellData. 
 
 ### Sanjay Chacku Purakal
+Implemented tests and coverage tool for SetWorksheetShowCommand and setEndForRange
 
 ### Chantal Ariu
 
