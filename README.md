@@ -82,11 +82,57 @@ Coverage tool results:
 ![alt text](image-1.png)
 With the current tests, none of the 6 branches were hit, resulting in 0% coverage.
 
+#### Team member: Ly Le
+
+##### Function 1: isAllFormatInTextRuns
+
+Link to commit: https://github.com/JariRoossien/univer/commit/ddc266f6ca82e8f459bccd3341feba3e633b1dc8
+
+Coverage tool results:
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/b8686894-9ed6-4666-84d1-88d7b8ba58f4)
+
+3 out of 7 were hit, meaning a branch coverage of 43% 
+
+##### Function 2: isValidRange
+
+Link to commit: https://github.com/JariRoossien/univer/commit/df9614ae2ee8b45cd76ff3b324276241f8b918bc
+
+Coverage tool results:
+
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/fd2df3fc-30ac-4b6c-8d88-03a8e6c5340c)
+
+None of the 8 branches were hit, giving a 0% coverage.
+
 ## Coverage improvement
 
 ### Individual tests
 
 <The following is supposed to be repeated for each group member>
+
+### Team Member: Jari Roossien
+
+#### getFormulaItemBySId()
+
+##### Before
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/2cbcabb1-c7d0-4f9d-a752-37d2de00331b)
+
+
+##### After
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/3cf83bd3-a581-47d0-84ef-92420e41172b)
+
+The branch coverage has been improved from 0 branches covered, to 7 out of 8 branches covered (87.5%).
+As there weren't any tests, most edge cases have been found. This contains different cases such as the unitID of the sheet not existing, the SheetID not existing, or the SId not existing. As the test suite created a mock object for a different test case, I modified the values to check for true and false based on the data as described in the mock sheet. The tests themselves check for all the possible nullified values and makes sure the function catches them.
+
+#### clearPreviousArrayFormulaCellData
+
+##### Before
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/ccbe08b1-e099-4d2f-ae07-c81c6035d6d7)
+
+##### After
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/304f6d47-cb3e-4424-a48e-ef21aaf7c885)
+
+For coverage has been improved from 0 branches covered, to 9 out of 11 branches covered (81.8%). 
+This function was originally tested using the given formulaDataModelArray that was mocked by the test suite. For each run, a different input was mocked, starting from completely nullified values, to completely correct, and partially missing data. As the test worked with a formula range that was given by a different function, some tests mocked that given data before the function itself was called, to make sure in different situation the code would behave as expected.
 
 ### Team Member: Sanjay Chacku Purakal
 
@@ -141,6 +187,37 @@ Coverage after improvement:
 ![alt text](image-3.png)
 
 The coverage improved by 83.3%, since in the beginning 0 branches were covered by the tests and after the improvements were made, 5 out of the 6 branches were hit. This was also done by writing tests that hit the branches.
+
+### Team member: Ly Le
+
+#### Function 1: isAllFormatInTextRuns
+Link to commit: https://github.com/JariRoossien/univer/commit/ec699062f8eb8187fed36378ee35ae8c37614e35 
+https://github.com/JariRoossien/univer/commit/5fa144f88ba37f4bd0da536ccfd4e60f1bab0619
+
+Coverage before improvement:
+
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/b8686894-9ed6-4666-84d1-88d7b8ba58f4)
+
+
+Coverage after improvement:
+
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/03ee6ccf-5bc3-4268-808e-81b4075de4eb)
+
+Coverage has been improved from 3/7 (42%) to 7/7 (100%). The original test only checked for a correct statement when the content was bold. I have implemented tests where these were not completely covered, where the effect is disabled, or where different effects have been used.
+
+#### Function 2: isValidRange
+Link to commit: https://github.com/JariRoossien/univer/commit/7870a34be59283120b4532d488c9e1b577bf2a14
+
+Coverage before improvement:
+
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/fd2df3fc-30ac-4b6c-8d88-03a8e6c5340c)
+
+Coverage after improvement:
+
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/524ebb23-8f89-48b4-ac96-685f801fe0dd)
+
+Coverage has improved from 0 branches hit, to all 8 branches hit, giving a 100% coverage. 
+The coverage has been improved by creating test cases for multiple possiblities. Ranging from just having valid inputs, to leaving certain values at NaN or empty to trigger the if statement clauses.
 
 ### Overall
 
