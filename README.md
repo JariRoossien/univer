@@ -7,6 +7,7 @@ Name: Univer
 URL: [https://github.com/dream-num/univer](https://github.com/dream-num/univer)
 
 Number of lines of code and the tool used to count it: 226237 counted through Lizard
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/1df0df38-1241-4542-a80e-ecf65b2082fa)
 
 Programming language: Typescript
 
@@ -16,7 +17,13 @@ Programming language: Typescript
 
 <Inform the name of the existing tool that was executed and how it was executed>
 
+The project is compiled with `vite` , and the test tool `vitest` is able to generate a local coverage report. By executing `pnpm run coverage`, the package.json calls `Turbo`, which calls `vitest run --coverage` for each package. Turbo is the management tool to compile the different packages of this repository into a single product.
+    
+As this repository is a mono repository, each package generates their own report. To get a global report, we have implemented a script called `merge-coverage.cjs`. This script copies all the local `coverage-final.json` into a `coverage/.nyc_output` folder, as `{package}-coverage.json`. Finally it calls `nyc report --reporter=html --reporter=text-summary`. This generates the same report as each `vitest run --coverage`, but as it contains all the coverage overviews, it will generate the report for the global coverage.
+    
 <Show the coverage results provided by the existing tool with a screenshot>
+![firefox_Wl2v3WhjCP](https://github.com/JariRoossien/univer/assets/54411538/b0b25d68-d9d2-4b64-b60f-934be7988e39)
+
 
 ### Your own coverage tool
 
