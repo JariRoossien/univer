@@ -22,6 +22,7 @@ The project is compiled with `vite` , and the test tool `vitest` is able to gene
 As this repository is a mono repository, each package generates their own report. To get a global report, we have implemented a script called `merge-coverage.cjs`. This script copies all the local `coverage-final.json` into a `coverage/.nyc_output` folder, as `{package}-coverage.json`. Finally it calls `nyc report --reporter=html --reporter=text-summary`. This generates the same report as each `vitest run --coverage`, but as it contains all the coverage overviews, it will generate the report for the global coverage.
     
 <Show the coverage results provided by the existing tool with a screenshot>
+    
 ![firefox_Wl2v3WhjCP](https://github.com/JariRoossien/univer/assets/54411538/b0b25d68-d9d2-4b64-b60f-934be7988e39)
 
 
