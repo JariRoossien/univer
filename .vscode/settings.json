@@ -3,7 +3,7 @@
 
     "javascript.preferences.importModuleSpecifier": "relative",
     "typescript.preferences.importModuleSpecifier": "relative",
-    "commentTranslate.targetLanguage": "zh-CN",
+    "commentTranslate.targetLanguage": "en",
     "commentTranslate.hover.enabled": true,
     "commentTranslate.source": "Google",
     "cSpell.words": [

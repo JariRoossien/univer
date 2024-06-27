@@ -554,7 +554,6 @@ export function isValidRange(range: IRange): boolean {
         return false;
     } else {
         branch_coverage.insertAfter2 = true;
-        return false;
     }
 
     if (!(Number.isNaN(startRow) && Number.isNaN(endRow)) && rangeType === RANGE_TYPE.COLUMN) {
@@ -562,7 +561,6 @@ export function isValidRange(range: IRange): boolean {
         return false;
     } else {
         branch_coverage.insertAfter4 = true;
-        return false;
     }
 
     if (!(Number.isNaN(startColumn) && Number.isNaN(endColumn)) && rangeType === RANGE_TYPE.ROW) {
@@ -570,7 +568,6 @@ export function isValidRange(range: IRange): boolean {
         return false;
     } else {
         branch_coverage.insertAfter6 = true;
-        return false;
     }
 
     if (
@@ -586,7 +583,6 @@ export function isValidRange(range: IRange): boolean {
         return false;
     } else {
         branch_coverage.insertAfter8 = true;
-        return false;
     }
     return true;
 }
