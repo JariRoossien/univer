@@ -253,3 +253,4 @@ Implemented tests and coverage tool for SetWorksheetShowCommand and setEndForRan
 ### Chantal Ariu
 
 ### Ly Le
+Added tests and coverage tool for isValidRange and isAllFormatInTextRuns
