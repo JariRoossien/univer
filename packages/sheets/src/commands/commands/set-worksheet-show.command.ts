@@ -101,6 +101,8 @@ export const SetWorksheetShowCommand: ICommand = {
             BranchCoverage.coverage.branches[8] = true;
         }
 
+        return false;
+
         const redoMutationParams: ISetWorksheetHideMutationParams = {
             unitId,
             subUnitId,
