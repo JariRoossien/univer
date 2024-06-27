@@ -22,6 +22,25 @@ Programming language: Typescript
 
 <The following is supposed to be repeated for each group member>
 
+#### Jari Roossien
+
+#### getFormulaItemBySId
+
+##### Implementation Commit
+https://github.com/JariRoossien/univer/commit/ef90d965ead24dd295f9bea6e39dbd83ec3ed538
+
+##### Branch Result
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/2cbcabb1-c7d0-4f9d-a752-37d2de00331b)
+
+#### clearPreviousArrayFormulaCellData
+
+##### Implementation Commit
+https://github.com/JariRoossien/univer/commit/50c0accdc9a46b093bb0114481c3325fc2f9cfb7
+
+##### Branch Result
+![afbeelding](https://github.com/JariRoossien/univer/assets/54411538/ccbe08b1-e099-4d2f-ae07-c81c6035d6d7)
+
+                        
 #### Team Member: Sanjay Chacku Purakal
 
 ##### SetWorksheetShowCommand()
@@ -35,6 +54,8 @@ Programming language: Typescript
 [Github Commit](https://github.com/JariRoossien/univer/tree/dc771281840c7e80bec107ee43dcbe9f70103f76)
 
 ![Coverage Report for setEndForRange showing 0% coverage before adding tests](images/setEndForRange-Before.jpeg)
+                        
+                        
 #### Team member: Chantal Ariu
 
 ##### Function 1: extractFilterValueFromCell

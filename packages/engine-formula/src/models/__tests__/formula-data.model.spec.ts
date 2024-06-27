@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-import type { ICellData, IWorkbookData, Nullable, Univer } from '@univerjs/core';
+import type { ICellData, IObjectMatrixPrimitiveType, IRange, IWorkbookData, Nullable, Univer } from '@univerjs/core';
 import { IUniverInstanceService, LocaleType, ObjectMatrix } from '@univerjs/core';
 import type { Injector } from '@wendellhu/redi';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { FormulaDataModel, initSheetFormulaData } from '../formula-data.model';
+import { FormulaDataModel, initSheetFormulaData, BranchCoverage } from '../formula-data.model';
 import { createCommandTestBed } from './create-command-test-bed';
+import { IArrayFormulaRangeType, IArrayFormulaUnitCellType, IRuntimeUnitDataType } from '../../basics/common';
 
 const TEST_WORKBOOK_DATA_DEMO: IWorkbookData = {
     id: 'test',
@@ -52,6 +53,34 @@ const TEST_WORKBOOK_DATA_DEMO: IWorkbookData = {
                     },
                 },
             },
+            
+        },
+    },
+    locale: LocaleType.ZH_CN,
+    name: '',
+    sheetOrder: [],
+    styles: {},
+};
+
+const TEST_ARRAY_WORKBOOK_DATA: IWorkbookData = {
+    id: 'test',
+    appVersion: '3.0.0-alpha',
+    sheets: {
+        sheet1: {
+            id: 'sheet1',
+            cellData: {
+                0: {
+                    0: {
+                        f: '=SUM(A1)',
+                        si: '3e4r5t',
+                    },
+                    1: {
+                        f: '=SUM(A2)',
+                        si: '6f7a8b'
+                    }
+                },
+            },
+            
         },
     },
     locale: LocaleType.ZH_CN,
@@ -61,10 +90,22 @@ const TEST_WORKBOOK_DATA_DEMO: IWorkbookData = {
 };
 
 describe('Test formula data model', () => {
+
+    afterAll(() => {
+        BranchCoverage.getFormulaItemBySIdBranchCov.printCoverage();
+        console.log();
+        BranchCoverage.clearPreviousArrayFormulaCellDataBranchCov.printCoverage();
+    });
+
     describe('formulaDataModel function', () => {
         let univer: Univer;
         let get: Injector['get'];
         let formulaDataModel: FormulaDataModel;
+
+        let univerArray: Univer;
+        let getArray: Injector['get'];
+        let formulaDataModelArray: FormulaDataModel;
+
         let getValues: (
             startRow: number,
             startColumn: number,
@@ -78,6 +119,12 @@ describe('Test formula data model', () => {
             get = testBed.get;
 
             formulaDataModel = get(FormulaDataModel);
+
+            const testBedArray = createCommandTestBed(TEST_ARRAY_WORKBOOK_DATA);
+            univerArray = testBedArray.univer;
+            getArray = testBedArray.get;
+
+            formulaDataModelArray = getArray(FormulaDataModel);
 
             getValues = (
                 startRow: number,
@@ -371,6 +418,169 @@ describe('Test formula data model', () => {
                 }
             });
         });
+
+        describe('getFormulaItemBySId', () => {
+            it('Should return null on non-existing unitId', () => {
+                formulaDataModel.initFormulaData();
+                const unitId = 'NonExisting';
+                const sheetId = 'sheet1';
+
+                expect(formulaDataModel.getFormulaItemBySId('NULL', sheetId, unitId)).toBeNull();
+            });
+            it('Should return null on non-existing sheetId', () => {
+                formulaDataModel.initFormulaData();
+                const unitId = 'test';
+                const sheetId = 'NonExistingSheet';
+
+                expect(formulaDataModel.getFormulaItemBySId('NULL', sheetId, unitId)).toBeNull();
+            });
+            it('Should find item by Value', () => {
+                const unitId = 'test';
+                const sheetId = 'sheet1';
+
+                expect(formulaDataModel.getFormulaItemBySId('3e4r5t', sheetId, unitId)).toBeTruthy();
+            });
+            it('Should not find item by Value', () => {
+                const unitId = 'test';
+                const sheetId = 'sheet1';
+
+                expect(formulaDataModel.getFormulaItemBySId('NonExisting', sheetId, unitId)).toBeNull();
+            });
+
+        })
+
+        describe('ClearArrayFormulaCellData', () => {
+            it('ClearSheetData is Null', () => {
+                const runTimeData: IRuntimeUnitDataType = {
+                    'sheet1': null
+                };
+                formulaDataModelArray.clearPreviousArrayFormulaCellData(runTimeData);
+            });
+            it('ClearSheetData runs succesful', () => {
+                const formulaArray: IArrayFormulaRangeType = {
+                    ['test']: {
+                        ['sheet1']: {
+                            0: {
+                                0: {
+                                    startColumn: 0,
+                                    endColumn: 2,
+                                    startRow: 0,
+                                    endRow: 0
+                                }
+                            }
+                        }
+                    }
+                } 
+                formulaDataModelArray.setArrayFormulaRange(formulaArray);
+                formulaDataModelArray.setArrayFormulaCellData({
+                    ['test']: {
+                        ['sheet1']: {
+                            0: {
+                                0: {
+                                    f: '=SUM(A1)',
+                                    si: '3e4r5t'
+                                },
+                                1: {
+                                    f: '=SUM(A1)',
+                                    si: '3e4r5t'
+                                }
+                            }
+                        }
+                    }
+                });
+                expect(formulaDataModelArray.getArrayFormulaCellData()['test']?.['sheet1']?.[0]?.[0]).toBeTruthy();
+                formulaDataModelArray.clearPreviousArrayFormulaCellData({
+                    ['test']: {
+                        ['sheet1']: createCellRangeMockObjectMatrix()
+                    }
+                });
+                expect(formulaDataModelArray.getArrayFormulaCellData()['test']?.['sheet1']?.[0]?.[0]).toBeNull();
+                // expect(formulaDataModelArray.getArrayFormulaCellData()).toBe(null);
+            });
+            it('ClearSheetData doesnt change with bad sheetname', () => {
+                const formulaArray: IArrayFormulaRangeType = {
+                    ['test']: {
+                        ['sheet1']: {
+                            0: {
+                                0: {
+                                    startColumn: 0,
+                                    endColumn: 2,
+                                    startRow: 0,
+                                    endRow: 0
+                                }
+                            }
+                        }
+                    }
+                } 
+                formulaDataModelArray.setArrayFormulaRange(formulaArray);
+                formulaDataModelArray.setArrayFormulaCellData({
+                    ['test']: {
+                        ['sheet1']: {
+                            0: {
+                                0: {
+                                    f: '=SUM(A1)',
+                                    si: '3e4r5t'
+                                },
+                                1: {
+                                    f: '=SUM(A1)',
+                                    si: '3e4r5t'
+                                }
+                            }
+                        }
+                    }
+                });
+                expect(formulaDataModelArray.getArrayFormulaCellData()['test']?.['sheet1']?.[0]?.[0]).toBeTruthy();
+                formulaDataModelArray.clearPreviousArrayFormulaCellData({
+                    ['test']: {
+                        ['badSheetName']: createCellRangeMockObjectMatrix()
+                    }
+                });
+                expect(formulaDataModelArray.getArrayFormulaCellData()['test']?.['sheet1']?.[0]?.[0]).toBeTruthy();
+            });
+
+            it('ClearSheetData doesnt change with no', () => {
+                const formulaArray: IArrayFormulaRangeType = {
+                    ['test']: {
+                        ['sheet1']: {
+                            0: {
+                                0: {
+                                    startColumn: 0,
+                                    endColumn: 2,
+                                    startRow: 0,
+                                    endRow: 0
+                                }
+                            }
+                        }
+                    }
+                } 
+                formulaDataModelArray.setArrayFormulaRange(formulaArray);
+                formulaDataModelArray.setArrayFormulaCellData({
+                    ['test']: {
+                        ['badSheet']: {
+                            1: {
+                                0: {
+                                    f: '=SUM(A1)',
+                                    si: '3e4r5t'
+                                },
+                                1: {
+                                    f: '=SUM(A1)',
+                                    si: '3e4r5t'
+                                }
+                            }
+                        }
+                    }
+                });
+                formulaDataModelArray.clearPreviousArrayFormulaCellData({
+                    ['test']: {
+                        ['sheet1']: createCellRangeMockObjectMatrix()
+                    }
+                });
+                expect(formulaDataModelArray.getArrayFormulaCellData()['test']?.['sheet1']?.[1]?.[0]).toBeFalsy();
+            });
+
+
+        });
+    
     });
 
     describe('function initSheetFormulaData', () => {
@@ -435,4 +645,30 @@ describe('Test formula data model', () => {
             expect(formulaData).toStrictEqual(result);
         });
     });
+
 });
+
+function createIRangeMockObjectMatrix(): ObjectMatrix<IRange> {
+    const matrixData: IObjectMatrixPrimitiveType<IRange> = {
+        0: {
+            0: { startColumn: 0,
+                endColumn: 0,
+                startRow: 0,
+                endRow: 2
+             },
+        }
+    };
+    return new ObjectMatrix(matrixData);
+};
+
+function createCellRangeMockObjectMatrix(): ObjectMatrix<Nullable<ICellData>> {
+    const matrixData: IObjectMatrixPrimitiveType<Nullable<ICellData>> = {
+        0: {
+            0: { 
+                si: null,
+                f: null
+            }
+        }
+    };
+    return new ObjectMatrix(matrixData);
+};
