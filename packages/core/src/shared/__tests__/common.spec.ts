@@ -75,13 +75,13 @@ describe('Test isValidRange', () => {
         expect(isValidRange(range)).toBeTruthy();
     });
 
-    it('return false and hit Branch 7 if rangeType is neither ROW or COLUMN and any of startRow, endRow, startColumn, endColumn is NaN', () => {
+    it('branch 7', () => {
         const range = {
             startRow: Number.NaN,
             endRow: 5,
             startColumn: 0,
             endColumn: 10,
-            rangeType: 'SOME_OTHER_TYPE', // assuming a type that is neither ROW nor COLUMN
+            rangeType: 'SOME_OTHER_TYPE',
         };
         expect(isValidRange(range)).toBe(false);
         expect(branch_coverage.insertAfter7).toBe(true);
@@ -93,7 +93,7 @@ describe('Test isValidRange', () => {
             endRow: 5,
             startColumn: 0,
             endColumn: 10,
-            rangeType: 'SOME_OTHER_TYPE', // assuming a type that is neither ROW nor COLUMN
+            rangeType: 'SOME_OTHER_TYPE',
         };
         expect(isValidRange(range)).toBe(true);
         expect(branch_coverage.insertAfter8).toBe(true);
