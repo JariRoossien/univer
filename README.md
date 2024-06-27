@@ -251,6 +251,7 @@ Set up github repository, implemented custom script to combine existing tooling 
 Implemented tests and coverage tool for SetWorksheetShowCommand and setEndForRange
 
 ### Chantal Ariu
+Implemented tests and coverage tooling for `extractFilterValueFromCell` function and `InsertRowAfterCommand` command.
 
 ### Ly Le
 Added tests and coverage tool for isValidRange and isAllFormatInTextRuns
