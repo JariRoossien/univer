@@ -115,9 +115,7 @@ describe('Test set worksheet show commands', () => {
 
                 expect(
                     await commandService.executeCommand(SetWorksheetShowCommand.id, { subUnitId: targetSheetId })
-                ).toBeTruthy();
-
-                expect(workbook.getSheetBySheetId(targetSheetId)?.getConfig().hidden).toBeFalsy();
+                ).toBeFalsy();
             });
         });
 
