@@ -34,6 +34,7 @@ import {
 import type { Styles } from './styles';
 import type { Worksheet } from './worksheet';
 
+
 /**
  * getObjectValues options type
  */
@@ -48,6 +49,16 @@ export interface IRangeDependencies {
     getStyles(): Readonly<Styles>;
 }
 
+export const branch_coverage = {
+    insertAfter1: false,
+    insertAfter2: false,
+    insertAfter3: false,
+    insertAfter4: false,
+    insertAfter5: false,
+    insertAfter6: false,
+    insertAfter7: false
+}
+
 export function isAllFormatInTextRuns(key: keyof IStyleBase, body: IDocumentBody): BooleanNumber {
     const { textRuns = [] } = body;
 
@@ -56,23 +67,42 @@ export function isAllFormatInTextRuns(key: keyof IStyleBase, body: IDocumentBody
     for (const textRun of textRuns) {
         const { ts = {}, st, ed } = textRun;
 
+        branch_coverage["insertAfter1"] = true;
+
         if (ts[key] == null) {
+            branch_coverage["insertAfter2"] = true;
             return BooleanNumber.FALSE;
+             }
+
+        else {
+            branch_coverage["insertAfter3"] = true;
+
         }
 
         switch (key) {
             case 'bl': // fallthrough
             case 'it': {
                 if (ts[key] === BooleanNumber.FALSE) {
-                    return BooleanNumber.FALSE;
-                }
+                    branch_coverage["insertAfter4"] = true;
+                    return BooleanNumber.FALSE; }
+
+                    else {
+                        branch_coverage["insertAfter5"] = true;
+                        }
+
                 break;
             }
 
             case 'ul': // fallthrough
             case 'st': {
                 if (ts[key]!.s === BooleanNumber.FALSE) {
+                    branch_coverage["insertAfter6"] = true;
                     return BooleanNumber.FALSE;
+                }
+
+                else
+                {
+                    branch_coverage["insertAfter7"] = true;
                 }
                 break;
             }
@@ -84,10 +114,13 @@ export function isAllFormatInTextRuns(key: keyof IStyleBase, body: IDocumentBody
         len += ed - st;
     }
 
+
     // Ensure textRuns cover all content.
     const index = body.dataStream.indexOf('\r\n');
 
     return index === len ? BooleanNumber.TRUE : BooleanNumber.FALSE;
+
+
 }
 
 /**

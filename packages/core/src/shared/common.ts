@@ -531,6 +531,17 @@ export function getDocsUpdateBody(model: IDocumentData, segmentId?: string) {
     return body;
 }
 
+export const branch_coverage = {
+    insertAfter1: false,
+    insertAfter2: false,
+    insertAfter3: false,
+    insertAfter4: false,
+    insertAfter5: false,
+    insertAfter6: false,
+    insertAfter7: false,
+    insertAfter8: false,
+};
+
 export function isValidRange(range: IRange): boolean {
     const { startRow, endRow, startColumn, endColumn, rangeType } = range;
     if (
@@ -539,15 +550,24 @@ export function isValidRange(range: IRange): boolean {
         || endRow < 0
         || endColumn < 0
     ) {
+        branch_coverage.insertAfter1 = true;
         return false;
+    } else {
+        branch_coverage.insertAfter2 = true;
     }
 
     if (!(Number.isNaN(startRow) && Number.isNaN(endRow)) && rangeType === RANGE_TYPE.COLUMN) {
+        branch_coverage.insertAfter3 = true;
         return false;
+    } else {
+        branch_coverage.insertAfter4 = true;
     }
 
     if (!(Number.isNaN(startColumn) && Number.isNaN(endColumn)) && rangeType === RANGE_TYPE.ROW) {
+        branch_coverage.insertAfter5 = true;
         return false;
+    } else {
+        branch_coverage.insertAfter6 = true;
     }
 
     if (
@@ -559,9 +579,11 @@ export function isValidRange(range: IRange): boolean {
             Number.isNaN(endRow)
         )
     ) {
+        branch_coverage.insertAfter7 = true;
         return false;
+    } else {
+        branch_coverage.insertAfter8 = true;
     }
-
     return true;
 }
 

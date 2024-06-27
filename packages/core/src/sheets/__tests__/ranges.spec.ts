@@ -14,12 +14,23 @@
  * limitations under the License.
  */
 
-import { describe, expect, it } from 'vitest';
-import { isAllFormatInTextRuns } from '../range';
+import { afterAll, describe, expect, it } from 'vitest';
+import { branch_coverage, isAllFormatInTextRuns } from '../range';
 import type { IDocumentBody } from '../../types/interfaces';
 import { BooleanNumber } from '../../types/enum';
 
-describe('Test isAllFormatInTextRuns', () => {
+describe('test isAllFormatInTextRuns', () => {
+    afterAll(() => {
+        console.log('isAllFormatInTextRuns branch Coverage');
+        console.log(`Branch 1: ${branch_coverage.insertAfter1 ? 'hit' : 'miss'}`);
+        console.log(`Branch 2: ${branch_coverage.insertAfter2 ? 'hit' : 'miss'}`);
+        console.log(`Branch 3: ${branch_coverage.insertAfter3 ? 'hit' : 'miss'}`);
+        console.log(`Branch 4: ${branch_coverage.insertAfter4 ? 'hit' : 'miss'}`);
+        console.log(`Branch 5: ${branch_coverage.insertAfter5 ? 'hit' : 'miss'}`);
+        console.log(`Branch 6: ${branch_coverage.insertAfter6 ? 'hit' : 'miss'}`);
+        console.log(`Branch 7: ${branch_coverage.insertAfter7 ? 'hit' : 'miss'}`);
+    });
+
     it('should return true when all content is bold', () => {
         const body: IDocumentBody = {
             dataStream: 'hello\r\n',
@@ -44,5 +55,65 @@ describe('Test isAllFormatInTextRuns', () => {
         };
 
         expect(isAllFormatInTextRuns('bl', body)).toBe(BooleanNumber.FALSE);
+    });
+
+    it('should return false when ts keys is undefined', () => {
+        const body: IDocumentBody = {
+            dataStream: 'hello\r\n',
+            textRuns: [{
+                st: 0,
+                ed: 4,
+                ts: { bl: null },
+            }],
+        };
+
+        expect(isAllFormatInTextRuns('bl', body)).toBe(BooleanNumber.FALSE);
+    });
+
+    it('should return false when ts keys is false', () => {
+        const body: IDocumentBody = {
+            dataStream: 'hello\r\n',
+            textRuns: [{
+                st: 0,
+                ed: 4,
+                ts: { bl: BooleanNumber.FALSE },
+            }],
+        };
+
+        expect(isAllFormatInTextRuns('bl', body)).toBe(BooleanNumber.FALSE);
+    });
+
+    it('should return false when any content is not underlined', () => {
+        const body: IDocumentBody = {
+            dataStream: 'hello\r\n',
+            textRuns: [{
+                st: 0,
+                ed: 4,
+                ts: {
+                    ul: {
+                        s: BooleanNumber.TRUE,
+                    },
+                },
+            }],
+        };
+
+        expect(isAllFormatInTextRuns('ul', body)).toBe(BooleanNumber.FALSE);
+    });
+
+    it('should return false when any content is not underlined', () => {
+        const body: IDocumentBody = {
+            dataStream: 'hello\r\n',
+            textRuns: [{
+                st: 0,
+                ed: 4,
+                ts: {
+                    ul: {
+                        s: BooleanNumber.FALSE,
+                    },
+                },
+            }],
+        };
+
+        expect(isAllFormatInTextRuns('ul', body)).toBe(BooleanNumber.FALSE);
     });
 });
