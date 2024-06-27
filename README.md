@@ -144,8 +144,6 @@ The coverage improved by 83.3%, since in the beginning 0 branches were covered b
 
 ### Overall
 
-<Provide a screenshot of the old coverage results by running an existing tool (the same as you already showed above)>
-
 #### Old Coverage
 
 ![firefox_Wl2v3WhjCP](https://github.com/JariRoossien/univer/assets/54411538/b0b25d68-d9d2-4b64-b60f-934be7988e39)
